@@ -328,13 +328,13 @@ export default function Success(props: PageProps) {
       return t(`needs_to_be_confirmed_or_rejected${titleSuffix}`);
     }
     if (bookingInfo.user) {
-      const attendeeFromViewer = bookingInfo.attendees.find(
+      const matchingAttendee = bookingInfo.attendees.find(
         (attendee) => attendee.email === session?.user?.email || (email && attendee.email === email)
       );
-      const isAttendee = !!attendeeFromViewer;
+      const isAttendee = !!matchingAttendee;
       const attendee =
-        attendeeFromViewer?.name ||
-        attendeeFromViewer?.email ||
+        matchingAttendee?.name ||
+        matchingAttendee?.email ||
         bookingInfo.attendees[0]?.name ||
         bookingInfo.attendees[0]?.email ||
         "Nameless";
