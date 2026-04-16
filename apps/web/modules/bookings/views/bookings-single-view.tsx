@@ -328,8 +328,16 @@ export default function Success(props: PageProps) {
       return t(`needs_to_be_confirmed_or_rejected${titleSuffix}`);
     }
     if (bookingInfo.user) {
-      const isAttendee = bookingInfo.attendees.find((attendee) => attendee.email === session?.user?.email);
-      const attendee = bookingInfo.attendees[0]?.name || bookingInfo.attendees[0]?.email || "Nameless";
+      const attendeeFromViewer = bookingInfo.attendees.find((attendee) => {
+        return attendee.email === session?.user?.email || (!!email && attendee.email === email);
+      });
+      const isAttendee = !!attendeeFromViewer;
+      const attendee =
+        attendeeFromViewer?.name ||
+        attendeeFromViewer?.email ||
+        bookingInfo.attendees[0]?.name ||
+        bookingInfo.attendees[0]?.email ||
+        "Nameless";
       const host = bookingInfo.user.name || bookingInfo.user.email;
       if (isHost) {
         return t(`${titlePrefix}emailed_host_and_attendee${titleSuffix}`, {
@@ -341,7 +349,7 @@ export default function Success(props: PageProps) {
       if (isAttendee) {
         return t(`${titlePrefix}emailed_host_and_attendee${titleSuffix}`, {
           host,
-          attendee: isAttendee.name || isAttendee.email || attendee,
+          attendee,
           interpolation: { escapeValue: false },
         });
       }
