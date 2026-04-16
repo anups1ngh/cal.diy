@@ -341,7 +341,7 @@ export default function Success(props: PageProps) {
       if (isAttendee) {
         return t(`${titlePrefix}emailed_host_and_attendee${titleSuffix}`, {
           host,
-          attendee,
+          attendee: isAttendee.name || isAttendee.email || attendee,
           interpolation: { escapeValue: false },
         });
       }
