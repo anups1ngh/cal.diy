@@ -328,9 +328,9 @@ export default function Success(props: PageProps) {
       return t(`needs_to_be_confirmed_or_rejected${titleSuffix}`);
     }
     if (bookingInfo.user) {
-      const attendeeFromViewer = bookingInfo.attendees.find((attendee) => {
-        return attendee.email === session?.user?.email || (!!email && attendee.email === email);
-      });
+      const attendeeFromViewer = bookingInfo.attendees.find(
+        (attendee) => attendee.email === session?.user?.email || (email && attendee.email === email)
+      );
       const isAttendee = !!attendeeFromViewer;
       const attendee =
         attendeeFromViewer?.name ||
